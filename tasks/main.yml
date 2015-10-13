@@ -10,6 +10,15 @@
   - reload nginx
   - restart php5-fpm
 
+- name: set php tunables
+  lineinfile: dest=/etc/php5/fpm/php.ini
+              regexp="^;?{{item.key}}"
+              line="{{item.key}} = {{item.value}}"
+              backup=yes
+  with_dict: "{{tunables}}"
+  when: tunables
+  notify: restart mysql
+
 - name: Install php5 packages
   apt: name={{item}} state=installed
   with_items: "{{php5_packages}}"
