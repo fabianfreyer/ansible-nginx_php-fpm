@@ -15,13 +15,12 @@
               regexp="^;?{{item.key}}"
               line="{{item.key}} = {{item.value}}"
               backup=yes
-  with_dict: "{{tunables}}"
-  when: tunables
+  with_dict: "{{tunables|default({})}}"
   notify: restart mysql
 
 - name: Install php5 packages
   apt: name={{item}} state=installed
-  with_items: "{{php5_packages}}"
+  with_items: "{{php5_packages|default([])}}"
   notify:
   - restart php5-fpm
 
