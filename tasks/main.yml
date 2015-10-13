@@ -1,0 +1,23 @@
+---
+
+- name: Install nginx and php5-fpm
+  apt: name={{item}} state=installed
+  with_items:
+  - nginx
+  - php5-fpm
+  - php-apc
+  notify:
+  - reload nginx
+  - restart php5-fpm
+
+- name: Install php5 packages
+  apt: name={{item}} state=installed
+  with_items: "{{php5_packages}}"
+  notify:
+  - restart php5-fpm
+
+- name: enable nginx and php5-fpm
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+  - nginx
+  - php5-fpm
