@@ -29,3 +29,10 @@
   with_items:
   - nginx
   - php5-fpm
+
+# On Ubuntus this is usually a TCP port. We'd rather use a unix socket...
+- name: set php5-fpm socket location
+  lineinfile:
+    dest: /etc/php5/fpm/pool.d/www.conf
+    regexp: '^listen ?='
+    line: 'listen = /var/run/php5-fpm.sock'
