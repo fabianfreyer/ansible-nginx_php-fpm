@@ -36,3 +36,12 @@
     dest: /etc/php5/fpm/pool.d/www.conf
     regexp: '^listen ?='
     line: 'listen = /var/run/php5-fpm.sock'
+  notify:
+  - restart php5-fpm
+
+- name: set ownership and permissions of php5-fpm socket
+  file:
+    path: /var/run/php5-fpm.sock
+    owner: root
+    group: www-data
+    mode: 660

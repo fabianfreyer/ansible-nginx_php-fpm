@@ -54,11 +54,16 @@ script:
   | grep -q 'Welcome to nginx!'
   && (echo 'NGINX test: pass' && exit 0)
   || (echo 'NGINX test: fail' && exit 1)
-- ls /var/run
 - >
   if [ -S /var/run/php5-fpm.sock ]; then
     echo 'PHP5-FPM Socket exists: pass' && exit 0
   else
     echo 'PHP5-FPM Socket exists: fail' && exit 1
   fi
+
+- >
+  stat -c "%a:%U:%G" /var/run/php5-fpm.sock
+  | grep -q '660:root:www-data'
+  && (echo 'PHP5-FPM Socket permissions: pass' && exit 0)
+  || (echo 'PHP5-FPM Socket permissions: fail' && exit 1)
 
