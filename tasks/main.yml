@@ -1,40 +1,40 @@
 ---
 
-- name: Install nginx and php5-fpm
+- name: Install nginx and php-fpm
   apt: name={{item}} state=installed
   with_items:
   - nginx
-  - php5-fpm
-  - php-apc
+  - php-fpm
+  - php-apcu
   notify:
   - reload nginx
-  - restart php5-fpm
+  - restart php-fpm
 
 - name: set php tunables
-  lineinfile: dest=/etc/php5/fpm/php.ini
+  lineinfile: dest=/etc/php/fpm/php.ini
               regexp="^;?{{item.key}}"
               line="{{item.key}} = {{item.value}}"
               backup=yes
   with_dict: "{{tunables|default({})}}"
   notify: restart mysql
 
-- name: Install php5 packages
+- name: Install php packages
   apt: name={{item}} state=installed
-  with_items: "{{php5_packages|default([])}}"
+  with_items: "{{php_packages|default([])}}"
   notify:
-  - restart php5-fpm
+  - restart php-fpm
 
-- name: enable nginx and php5-fpm
+- name: enable nginx and php-fpm
   service: name={{item}} enabled=yes state=started
   with_items:
   - nginx
-  - php5-fpm
+  - php7.0-fpm
 
 # On Ubuntus this is usually a TCP port. We'd rather use a unix socket...
-- name: set php5-fpm socket location
+- name: set php-fpm socket location
   lineinfile:
-    dest: /etc/php5/fpm/pool.d/www.conf
+    dest: /etc/php/7.0/fpm/pool.d/www.conf
     regexp: '^listen ?='
-    line: 'listen = /var/run/php5-fpm.sock'
+    line: 'listen = /var/run/php-fpm.sock'
   notify:
-  - restart php5-fpm
+  - restart php7.0-fpm
