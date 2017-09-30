@@ -37,4 +37,4 @@
     regexp: '^listen ?='
     line: 'listen = /var/run/php-fpm.sock'
   notify:
-  - restart php7.0-fpm
+  - restart php-fpm
