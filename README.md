@@ -1,6 +1,6 @@
-# Ansible role to install NGINX with PHP5-FPM.
+# Ansible role to install NGINX with PHP-FPM.
 
-[![Build Status](https://travis-ci.org/fabianfreyer/ansible-nginx_php5-fpm.svg?branch=master)](https://travis-ci.org/fabianfreyer/ansible-nginx_php5-fpm)
+[![Build Status](https://travis-ci.org/fabianfreyer/ansible-nginx_php-fpm.svg?branch=master)](https://travis-ci.org/fabianfreyer/ansible-nginx_php5-fpm)
 
 ## Dependencies
 
